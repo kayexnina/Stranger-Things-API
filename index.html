@@ -27,13 +27,13 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         color: #fff;
-        width: 80%; /* Adjusted for responsiveness */
-        max-width: 500px; /* Set maximum width */
+        width: 80%;
+        max-width: 500px;
       }
 
       #characterImage {
@@ -50,11 +50,11 @@
       }
 
       #characterInput {
-        width: 80%; /* Adjusted for responsiveness */
+        width: 80%;
         padding: 8px;
         text-align: center;
         border-radius: 5px;
-        margin-bottom: 10px; /* Add some space below the input */
+        margin-bottom: 10px;
       }
 
       #searchButton {
@@ -88,9 +88,8 @@
         color: #545e64;
       }
 
-      /* Adjust spacing for character information */
       #characterInfo p {
-        margin: 5px 0; /* Reduce margin between paragraphs */
+        margin: 5px 0;
       }
 
       /*background*/
@@ -100,16 +99,24 @@
         }
       }
 
-      /*container - mobile*/
+      /*container - smaller screen*/
       @media (max-width: 768px) {
         #container {
           width: 90%;
+        }
+
+        h1{
+          font-size: larger;
         }
       }
 
       @media (max-width: 480px) {
         #container {
           padding: 10px;
+        }
+
+        h1{
+          font-size: medium;
         }
       }
     </style>
@@ -121,7 +128,7 @@
       <input
         type="text"
         id="characterInput"
-        placeholder="Enter character's first name"
+        placeholder="Enter main character's first name"
       />
       <br />
       <button id="searchButton" onclick="searchCharacter()">Search</button>
@@ -148,11 +155,11 @@
             if (character) {
               displayCharacterInfo(character);
               document.getElementById("clearButton").style.display =
-                "inline-block"; // Show the clear button
+                "inline-block";
             } else {
               document.getElementById("characterInfo").innerHTML =
-                "<p>No matching character found.</p>";
-              document.getElementById("clearButton").style.display = "none"; // Hide the clear button
+                "<p>No matching main character found.</p>";
+              document.getElementById("clearButton").style.display = "none";
             }
           })
           .catch((error) => {
