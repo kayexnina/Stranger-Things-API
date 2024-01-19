@@ -27,7 +27,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.8);
         padding: 20px;
         border-radius: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -92,6 +92,14 @@
         margin: 5px 0;
       }
 
+      h1, h2 {
+          font-size: x-large;
+        }
+
+        #characterInfo p{
+          font-size: large;
+        }
+
       /*background*/
       @media (max-width: 480px) {
         body {
@@ -105,8 +113,12 @@
           width: 90%;
         }
 
-        h1 {
+        h1, h2 {
           font-size: larger;
+        }
+
+        #characterInfo p{
+          font-size: medium;
         }
       }
 
@@ -115,8 +127,12 @@
           padding: 10px;
         }
 
-        h1 {
+        h1, h2 {
           font-size: medium;
+        }
+
+        #characterInfo p{
+          font-size: smaller;
         }
       }
     </style>
