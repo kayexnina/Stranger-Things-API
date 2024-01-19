@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stranger Things</title>
+    <link rel="icon" href="demogorgon.ico" type="image/x-icon" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-image: url("background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      /* Mobile background change */
+      @media (max-width: 480px) {
+        body {
+          background-image: url("background1.jpg");
+        }
+      }
+      #container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8); /* Reduced opacity */
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #fff;
+        width: 500px; /* Adjust as needed */
+      }
+
+      #characterImage {
+        max-width: 100%;
+        height: auto;
+        max-height: 200px; /* Adjust the max-height as needed */
+        margin: 0 auto;
+        border-radius: 5px;
+      }
+
+      #characterInfo {
+        text-align: center;
+        color: #fff;
+      }
+
+      /* Media queries for responsiveness */
+      @media (max-width: 768px) {
+        #container {
+          max-width: 90%; /* Adjust as needed */
+        }
+      }
+
+      @media (max-width: 480px) {
+        #container {
+          padding: 10px; /* Adjust as needed */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Character Search</h1>
+      <input
+        type="text"
+        id="characterInput"
+        placeholder="Enter character's first name"
+      />
+      <button onclick="searchCharacter()">Search</button>
+
+      <div id="characterInfo"></div>
+    </div>
+
+    <script>
+      function searchCharacter() {
+        var characterName = document.getElementById("characterInput").value;
+        var charactersUrl = "https://hawapi.theproject.id/api/v1/characters";
+
+        fetch(charactersUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            var character = data.find(
+              (char) =>
+                char.first_name.toLowerCase() === characterName.toLowerCase()
+            );
+
+            if (character) {
+              displayCharacterInfo(character);
+            } else {
+              document.getElementById("characterInfo").innerHTML =
+                "<p>No matching character found.</p>";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching character data:", error);
+          });
+      }
+
+      function displayCharacterInfo(character) {
+        var portrayedByUrl = "https://hawapi.theproject.id/api/v1/actors";
+        var portrayedByUuid = character.actor.split("/").pop();
+
+        fetch(portrayedByUrl + "/" + portrayedByUuid)
+          .then((response) => response.json())
+          .then((portrayedByData) => {
+            document.getElementById("characterInfo").innerHTML = `
+                      <h2>${character.first_name} ${character.last_name}</h2>
+                      <img id="characterImage" src="${
+                        portrayedByData.thumbnail
+                      }" alt="${character.first_name} ${character.last_name}">
+                      <p>Portrayed by: ${portrayedByData.first_name} ${
+              portrayedByData.last_name
+            }</p>
+                      <p>Gender: ${
+                        portrayedByData.gender === 1 ? "Male" : "Female"
+                      }</p>
+                      <p>Nationality: ${
+                        portrayedByData.nationality || "Not available"
+                      }</p>
+                      <p>Birth Date: ${
+                        portrayedByData.birth_date || "Not available"
+                      }</p>
+                  `;
+          })
+          .catch((error) => {
+            console.error("Error fetching portrayed by data:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
